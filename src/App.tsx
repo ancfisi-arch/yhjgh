@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { GraduationCap, Building2, Wallet, ShieldCheck, Home, ArrowRight, Shield } from 'lucide-react';
+import { GraduationCap, Building2, Wallet, ShieldCheck, Home, ArrowRight, Shield, BarChart3 } from 'lucide-react';
 import LandingPage from './components/LandingPage';
 import InstitutionDashboard from './components/InstitutionDashboard';
 import StudentWallet from './components/StudentWallet';
 import VerificationPortal from './components/VerificationPortal';
 import AdminPanel from './components/AdminPanel';
+import AnalyticsDashboard from './components/AnalyticsDashboard';
 import { PageView } from './types/credential';
 
 function App() {
@@ -33,7 +34,22 @@ function App() {
             <p className="text-xl text-gray-600">Select the option that best describes your role</p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <button
+              onClick={() => setCurrentView('analytics')}
+              className="group p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-teal-500 hover:-translate-y-1"
+            >
+              <div className="w-16 h-16 bg-teal-100 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-teal-600 transition-colors">
+                <BarChart3 className="w-8 h-8 text-teal-600 group-hover:text-white transition-colors" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">Analytics</h3>
+              <p className="text-gray-600 mb-4">View system analytics and insights</p>
+              <div className="flex items-center justify-center text-teal-600 font-semibold">
+                View Dashboard
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
+              </div>
+            </button>
+
             <button
               onClick={() => setCurrentView('admin')}
               className="group p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-orange-500 hover:-translate-y-1"
@@ -133,6 +149,17 @@ function App() {
                 Home
               </button>
               <button
+                onClick={() => setCurrentView('analytics')}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center ${
+                  currentView === 'analytics'
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                <BarChart3 className="w-4 h-4 mr-2" />
+                Analytics
+              </button>
+              <button
                 onClick={() => setCurrentView('admin')}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center ${
                   currentView === 'admin'
@@ -182,6 +209,7 @@ function App() {
       </nav>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {currentView === 'analytics' && <AnalyticsDashboard />}
         {currentView === 'admin' && <AdminPanel />}
         {currentView === 'institution' && <InstitutionDashboard />}
         {currentView === 'student' && <StudentWallet />}
